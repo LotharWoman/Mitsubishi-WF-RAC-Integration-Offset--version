@@ -29,6 +29,11 @@ from .wfrac.repository import Repository
 
 _LOGGER = logging.getLogger(__name__)
 
+# Define new constants for the offset values
+CONF_INDOOR_OFFSET = "indoor_offset"
+CONF_OUTDOOR_OFFSET = "outdoor_offset"
+CONF_TARGET_OFFSET = "target_offset"
+
 
 class WfRacConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow."""
@@ -297,6 +302,19 @@ class WfRacOptionsFlowHandler(config_entries.OptionsFlow):
                         CONF_AVAILABILITY_RETRY_LIMIT,
                         default=self.config_entry.options.get(CONF_AVAILABILITY_RETRY_LIMIT, 3),  # type: ignore
                     ): int,
+                    # Added offset fields as requested. The UI should allow for a step of 0.1
+                    vol.Optional(
+                        CONF_INDOOR_OFFSET,
+                        default=self.config_entry.options.get(CONF_INDOOR_OFFSET, 0.0), # type: ignore
+                    ): vol.Coerce(float),
+                    vol.Optional(
+                        CONF_OUTDOOR_OFFSET,
+                        default=self.config_entry.options.get(CONF_OUTDOOR_OFFSET, 0.0), # type: ignore
+                    ): vol.Coerce(float),
+                    vol.Optional(
+                        CONF_TARGET_OFFSET,
+                        default=self.config_entry.options.get(CONF_TARGET_OFFSET, 0.0), # type: ignore
+                    ): vol.Coerce(float),
                 },
             ),
         )
