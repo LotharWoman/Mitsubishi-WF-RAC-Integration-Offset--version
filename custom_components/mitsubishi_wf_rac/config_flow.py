@@ -24,15 +24,10 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.config_entries import ConfigFlowResult
 
 from .const import CONF_AVAILABILITY_CHECK, CONF_AVAILABILITY_RETRY_LIMIT, CONF_OPERATOR_ID, CONF_AIRCO_ID, DOMAIN, \
-    CONF_CREATE_SWING_MODE_SELECT
+    CONF_CREATE_SWING_MODE_SELECT, CONF_INDOOR_OFFSET, CONF_OUTDOOR_OFFSET, CONF_TARGET_OFFSET
 from .wfrac.repository import Repository
 
 _LOGGER = logging.getLogger(__name__)
-
-# Define new constants for the offset values
-CONF_INDOOR_OFFSET = "indoor_offset"
-CONF_OUTDOOR_OFFSET = "outdoor_offset"
-CONF_TARGET_OFFSET = "target_offset"
 
 
 class WfRacConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -302,19 +297,18 @@ class WfRacOptionsFlowHandler(config_entries.OptionsFlow):
                         CONF_AVAILABILITY_RETRY_LIMIT,
                         default=self.config_entry.options.get(CONF_AVAILABILITY_RETRY_LIMIT, 3),  # type: ignore
                     ): int,
-                    # Added offset fields as requested. The UI should allow for a step of 0.1
                     vol.Optional(
                         CONF_INDOOR_OFFSET,
                         default=self.config_entry.options.get(CONF_INDOOR_OFFSET, 0.0), # type: ignore
-                    ): vol.Coerce(float),
+                    ): vol.Coerce(float, vol.Range(min=-15.0, max=15.0)),
                     vol.Optional(
                         CONF_OUTDOOR_OFFSET,
                         default=self.config_entry.options.get(CONF_OUTDOOR_OFFSET, 0.0), # type: ignore
-                    ): vol.Coerce(float),
+                    ): vol.Coerce(float, vol.Range(min=-15.0, max=15.0)),
                     vol.Optional(
                         CONF_TARGET_OFFSET,
                         default=self.config_entry.options.get(CONF_TARGET_OFFSET, 0.0), # type: ignore
-                    ): vol.Coerce(float),
+                    ): vol.Coerce(float, vol.Range(min=-15.0, max=15.0)),
                 },
             ),
         )

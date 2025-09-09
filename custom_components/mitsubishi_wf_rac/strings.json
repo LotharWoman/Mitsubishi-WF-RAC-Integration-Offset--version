@@ -38,7 +38,10 @@
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "availability_check": "[%key:common::config_flow::data::avaiability%]",
-          "availability_retry_limit": "[%key:common::config_flow::data::avaiability_retry_limit%]"
+          "availability_retry_limit": "[%key:common::config_flow::data::avaiability_retry_limit%]",
+          "indoor_offset": "Indoor Temperature Offset",
+          "outdoor_offset": "Outdoor Temperature Offset",
+          "target_offset": "Target Temperature Offset"
         },
         "title": "WF-RAC AC connection info"
       }

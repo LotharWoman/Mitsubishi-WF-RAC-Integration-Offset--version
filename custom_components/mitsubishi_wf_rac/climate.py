@@ -35,7 +35,9 @@ from .const import (
     SWING_MODE_TRANSLATION,
     SWING_HORIZONTAL_MODE_TRANSLATION,
     MIN_TIME_BETWEEN_UPDATES,
-    SUPPORT_SWING_HORIZONTAL_MODES
+    SUPPORT_SWING_HORIZONTAL_MODES,
+    CONF_INDOOR_OFFSET,
+    CONF_TARGET_OFFSET
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -100,13 +102,23 @@ class AircoClimate(ClimateEntity):
         if set_temp is None:
             raise ValueError("Temperature is required")
 
-        if set_temp < self._attr_min_temp:
-            raise ValueError(f"Temperature {set_temp} is below minimum {self._attr_min_temp}")
 
-        if set_temp > self._attr_max_temp:
-            raise ValueError(f"Temperature {set_temp} is above maximum {self._attr_max_temp}")
+        # Apply target offset
+        target_offset = self._device.config_entry.options.get(CONF_TARGET_OFFSET, 0.0)
+        # The target offset is subtracted from the user-set temperature to get the real temperature to be sent to the AC unit.
+        _target_temp = set_temp + target_offset
 
-        opts: dict[str, Any] = {AirconCommands.PresetTemp: set_temp}
+        # Ensure the target temperature is at least 18 degrees
+        if _target_temp < 18:
+            _target_temp = 18
+
+        if _target_temp < self._attr_min_temp:
+            raise ValueError(f"Temperature {_target_temp} is below minimum {self._attr_min_temp}")
+
+        if _target_temp > self._attr_max_temp:
+            raise ValueError(f"Temperature {_target_temp} is above maximum {self._attr_max_temp}")
+
+        opts: dict[str, Any] = {AirconCommands.PresetTemp: _target_temp}
 
         if "hvac_mode" in kwargs:
             hvac_mode: HVACMode | None = kwargs.get("hvac_mode")
@@ -197,9 +209,12 @@ class AircoClimate(ClimateEntity):
     def _update_state(self) -> None:
         """Private update attributes"""
         airco = self._device.airco
-
+        
+        # Apply indoor offset
+        indoor_offset = self._device.config_entry.options.get(CONF_INDOOR_OFFSET, 0.0)
+        
         self._attr_target_temperature = airco.PresetTemp
-        self._attr_current_temperature = airco.IndoorTemp
+        self._attr_current_temperature = airco.IndoorTemp + indoor_offset
         self._attr_fan_mode = list(FAN_MODE_TRANSLATION.keys())[airco.AirFlow]
         self._attr_swing_mode = (
             SWING_3D_AUTO
