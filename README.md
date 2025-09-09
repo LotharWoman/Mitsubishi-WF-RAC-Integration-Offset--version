@@ -1,8 +1,8 @@
-# Mitsubishi WF-RAC Integration
+# Mitsubishi WF-RAC Integration - "offset" Edidtion
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-This is a Homeassistant integration for implementing the WF-RAC Airco modules into Homeassistant
+This is a Homeassistant integration for implementing the WF-RAC Airco modules into Homeassistant mit möglichkeit der Anpassung der Temperaturwerte.
 
 `❗ Note: This is an experimental integration that is reversed engineert. Therefore there can by unwanted results ❗`
 
@@ -17,7 +17,7 @@ See [Github To Do & Bug List](https://github.com/jeatheak/Mitsubishi-WF-RAC-Inte
 # Installation
 
 Install using [HACS](https://hacs.xyz)
-In HACS go to the three dots int the upper right corner choose add custom repository and add https://github.com/jeatheak/Mitsubishi-WF-RAC-Integration to the list.
+In HACS go to the three dots int the upper right corner choose add custom repository and add [https://github.com/LotharWoman/Mitsubishi-WF-RAC-Integration-Offset--version] to the list.
 
 Install manually
 Clone or copy this repository and copy the folder 'custom_components/mitsubishi-wf-rac' into '/custom_components/mitsubishi-wf-rac'
