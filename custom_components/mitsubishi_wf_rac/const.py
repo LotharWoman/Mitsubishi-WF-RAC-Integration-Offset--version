@@ -1,4 +1,4 @@
-"""Constants used by the mitsubishi-wf-rac component."""
+"""Constants used by the mitsubishi-wf-rac component.
 
 from datetime import timedelta
 from homeassistant.const import CONF_ICON, CONF_NAME, CONF_TYPE
@@ -133,10 +133,10 @@ SUPPORT_SWING_HORIZONTAL_MODES = [
 ]
 
 
-FAN_MODE_1 = "1 Lowest"
-FAN_MODE_2 = "2 Low"
-FAN_MODE_3 = "3 High"
-FAN_MODE_4 = "4 Highest"
+FAN_MODE_1 = "UltraLow"
+FAN_MODE_2 = "Low"
+FAN_MODE_3 = "Medium"
+FAN_MODE_4 = "High"
 
 FAN_MODE_TRANSLATION = {
     FAN_AUTO: 0,
@@ -163,3 +163,5 @@ OPERATION_LIST = {
     HVACMode.DRY: "Dry",
     HVACMode.FAN_ONLY: "Fan",
 }
+
+"""
