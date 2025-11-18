@@ -133,10 +133,10 @@ SUPPORT_SWING_HORIZONTAL_MODES = [
 ]
 
 
-FAN_MODE_1 = "1 Lowest"
-FAN_MODE_2 = "2 Low"
-FAN_MODE_3 = "3 High"
-FAN_MODE_4 = "4 Highest"
+FAN_MODE_1 = "UltraLow"
+FAN_MODE_2 = "Low"
+FAN_MODE_3 = "Medium"
+FAN_MODE_4 = "High"
 
 FAN_MODE_TRANSLATION = {
     FAN_AUTO: 0,
